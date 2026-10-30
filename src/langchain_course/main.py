@@ -33,8 +33,13 @@ given the information {information} about a person I want to create:
         template=summary_template
     )
 
-    # llm = ChatOpenAI(temperature=0, model="gpt-5")
-    llm = ChatOllama(temperature=0, model="gemma3:270m")
+    llm = ChatOpenAI(temperature=0, model="gpt-5")
+    # llm = ChatOllama(
+    #     temperature=0,
+    #     model=os.getenv("OLLAMA_MODEL"),
+    #     base_url=os.getenv("OLLAMA_BASE_URL", "http://steigerwaldhome.local:11434"),
+    #     reasoning="low",
+    # )
     chain = summary_prompt_template | llm
     response = chain.invoke(input={"information": information})
     print(response.content)
